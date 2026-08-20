@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Crop Doctor</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+</head>
+
+<body>
+
+    <div class="background-glow glow-1"></div>
+    <div class="background-glow glow-2"></div>
+
+    <main class="container">
+
+        <!-- HEADER -->
+        <header class="hero">
+
+            <div class="logo">
+                🌱
+            </div>
+
+            <div>
+                <h1>AI-DRIVEN CROP DISEASE PREDICTION</h1>
+
+                <p>
+                    Intelligent plant disease detection
+                    powered by AI
+                </p>
+            </div>
+
+        </header>
+
+
+        <!-- MAIN CARD -->
+        <section class="card">
+
+            <div class="section-title">
+
+                <span>01</span>
+
+                <div>
+                    <h2>Upload Leaf</h2>
+                    <p>
+                        Upload a clear image of the leaf
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- FORM -->
+            <form id="predictionForm">
+
+                <!-- DROP AREA -->
+                <label
+                    for="imageInput"
+                    class="upload-box"
+                    id="uploadBox"
+                >
+
+                    <div class="upload-icon">
+                        📷
+                    </div>
+
+                    <h3>
+                        Drop your leaf image here
+                    </h3>
+
+                    <p>
+                        or click to browse
+                    </p>
+
+                    <small>
+                        JPG • JPEG • PNG • WEBP
+                    </small>
+
+                    <input
+                        type="file"
+                        id="imageInput"
+                        name="image"
+                        accept="image/*"
+                        required
+                        hidden
+                    >
+
+                </label>
+
+
+                <!-- IMAGE PREVIEW -->
+                <div
+                    class="preview-container"
+                    id="previewContainer"
+                >
+
+                    <img
+                        id="preview"
+                        alt="Leaf preview"
+                    >
+
+                    <button
+                        type="button"
+                        id="removeImage"
+                        class="remove-btn"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <!-- PREDICT BUTTON -->
+                <button
+                    type="submit"
+                    id="predictButton"
+                    class="predict-btn"
+                >
+
+                    <span>
+                        🔍
+                    </span>
+
+                    Analyze Leaf
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- RESULT -->
+            <div
+                id="result"
+                class="result-area"
+            ></div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer>
+
+            <span>AI Powered</span>
+
+            <span>•</span>
+
+            <span>Plant Disease Detection</span>
+
+            <span>•</span>
+
+            <span>15 Classes</span>
+
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+model/*.keras
+model/*.h5
+model/*.hdf5
+dataset/
+*.zip
+*.rar
+.env
