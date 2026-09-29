@@ -1,12 +1,37 @@
-/* =====================================================
-   GLOBAL
-===================================================== */
+/* ========================================================
+   AI CROP DOCTOR
+   MODERN DARK AGRICULTURE UI
+   ======================================================== */
+
 
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
+
+
+:root {
+
+    --bg: #070b12;
+    --card: #101722;
+    --card-2: #141e2c;
+
+    --green: #a8ff5a;
+    --green-dark: #5fcf3b;
+
+    --text: #f5f7fa;
+    --muted: #9ca8b8;
+
+    --border: rgba(
+        255,
+        255,
+        255,
+        0.08
+    );
+
+}
+
 
 body {
 
@@ -14,93 +39,83 @@ body {
 
     font-family:
         Inter,
-        Segoe UI,
         Arial,
+        Helvetica,
         sans-serif;
 
     background:
         radial-gradient(
-            circle at top left,
-            #183c2b,
-            transparent 35%
+            circle at 20% 10%,
+            rgba(
+                82,
+                255,
+                110,
+                0.12
+            ),
+            transparent 30%
         ),
+
         radial-gradient(
-            circle at bottom right,
-            #0b3324,
-            transparent 35%
+            circle at 80% 20%,
+            rgba(
+                74,
+                100,
+                255,
+                0.12
+            ),
+            transparent 30%
         ),
-        #07130e;
 
-    color: #ecfff4;
+        var(--bg);
 
-    display: flex;
+    color: var(--text);
 
-    justify-content: center;
-
-    align-items: center;
-
-    padding: 30px;
-
-    overflow-x: hidden;
 }
 
-
-/* =====================================================
-   BACKGROUND GLOW
-===================================================== */
 
 .background-glow {
 
     position: fixed;
 
-    width: 300px;
-    height: 300px;
+    width: 500px;
+    height: 500px;
 
     border-radius: 50%;
 
+    background:
+        rgba(
+            150,
+            255,
+            70,
+            0.06
+        );
+
     filter: blur(100px);
 
-    opacity: 0.25;
-
     pointer-events: none;
+
 }
 
-.glow-1 {
-
-    background: #20d879;
-
-    top: -100px;
-    left: -100px;
-}
-
-.glow-2 {
-
-    background: #0ea56b;
-
-    right: -100px;
-    bottom: -100px;
-}
-
-
-/* =====================================================
-   CONTAINER
-===================================================== */
 
 .container {
 
-    width: 100%;
+    width: min(
+        1100px,
+        92%
+    );
 
-    max-width: 760px;
+    margin:
+        0 auto;
 
-    position: relative;
+    padding:
+        55px 0 40px;
 
-    z-index: 2;
 }
 
 
-/* =====================================================
+/* ========================================================
    HERO
-===================================================== */
+   ======================================================== */
 
 .hero {
 
@@ -108,223 +123,283 @@ body {
 
     align-items: center;
 
-    gap: 18px;
+    gap: 20px;
 
-    margin-bottom: 25px;
+    margin-bottom: 35px;
+
 }
+
 
 .logo {
 
-    width: 65px;
-    height: 65px;
-
-    border-radius: 20px;
+    width: 70px;
+    height: 70px;
 
     display: flex;
 
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
-    font-size: 35px;
+    border-radius: 22px;
 
     background:
-        linear-gradient(
-            135deg,
-            #24d978,
-            #0d7e4f
+        rgba(
+            168,
+            255,
+            90,
+            0.12
         );
 
-    box-shadow:
-        0 15px 40px
-        rgba(28, 214, 117, 0.25);
+    border:
+        1px solid
+        rgba(
+            168,
+            255,
+            90,
+            0.2
+        );
+
+    font-size: 36px;
+
 }
+
+
+.eyebrow {
+
+    color: var(--green);
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+
+}
+
 
 .hero h1 {
 
-    font-size: 34px;
+    font-size:
+        clamp(
+            28px,
+            4vw,
+            45px
+        );
+
+    line-height: 1.1 !important;
+
+    text-transform: uppercase;
 
     letter-spacing: -1px;
 
-    margin-bottom: 5px;
-}
-
-.hero p {
-
-    color: #8fa99c;
-
-    font-size: 15px;
 }
 
 
-/* =====================================================
-   CARD
-===================================================== */
+.subtitle {
+
+    color: var(--muted);
+
+    margin-top: 12px;
+
+    font-size: 16px;
+
+}
+
+
+/* ========================================================
+   MAIN CARD
+   ======================================================== */
 
 .card {
 
     background:
-        rgba(255, 255, 255, 0.055);
+        linear-gradient(
+            145deg,
+            rgba(
+                255,
+                255,
+                255,
+                0.06
+            ),
+            rgba(
+                255,
+                255,
+                255,
+                0.025
+            )
+        );
 
     border:
         1px solid
-        rgba(255, 255, 255, 0.09);
+        var(--border);
+
+    border-radius: 28px;
+
+    padding: 35px;
 
     backdrop-filter:
         blur(20px);
 
-    -webkit-backdrop-filter:
-        blur(20px);
-
-    border-radius: 28px;
-
-    padding: 32px;
-
     box-shadow:
-        0 25px 80px
-        rgba(0, 0, 0, 0.35);
+        0 30px 80px
+        rgba(
+            0,
+            0,
+            0,
+            0.35
+        );
+
 }
 
 
-/* =====================================================
+/* ========================================================
    SECTION TITLE
-===================================================== */
+   ======================================================== */
 
 .section-title {
 
     display: flex;
 
-    gap: 15px;
+    gap: 20px;
 
-    align-items: center;
+    margin-bottom: 28px;
 
-    margin-bottom: 25px;
 }
 
-.section-title > span {
 
-    color: #35e586;
+.number {
 
-    font-size: 13px;
+    color: var(--green);
 
-    font-weight: 800;
+    font-size: 15px;
 
-    background:
-        rgba(40, 218, 121, 0.1);
+    font-weight: 900;
 
-    padding: 8px 10px;
-
-    border-radius: 10px;
 }
+
 
 .section-title h2 {
 
-    font-size: 20px;
+    font-size: 28px;
 
-    margin-bottom: 3px;
 }
+
 
 .section-title p {
 
-    color: #809b8d;
+    margin-top: 7px;
 
-    font-size: 13px;
+    color: var(--muted);
+
 }
 
 
-/* =====================================================
-   UPLOAD BOX
-===================================================== */
+/* ========================================================
+   UPLOAD
+   ======================================================== */
 
 .upload-box {
 
-    min-height: 260px;
-
-    border:
-        1.5px dashed
-        rgba(68, 224, 135, 0.4);
-
-    border-radius: 22px;
+    min-height: 300px;
 
     display: flex;
 
     flex-direction: column;
 
-    justify-content: center;
-
     align-items: center;
+    justify-content: center;
 
     text-align: center;
 
     cursor: pointer;
 
+    border:
+        2px dashed
+        rgba(
+            168,
+            255,
+            90,
+            0.55
+        );
+
+    border-radius: 22px;
+
     background:
-        rgba(20, 130, 78, 0.06);
+        rgba(
+            168,
+            255,
+            90,
+            0.035
+        );
 
     transition:
-        0.3s ease;
+        0.25s ease;
 
-    padding: 30px;
 }
+
 
 .upload-box:hover {
 
-    border-color: #3de487;
+    transform:
+        translateY(-3px);
+
+    border-color:
+        var(--green);
 
     background:
-        rgba(40, 220, 120, 0.09);
+        rgba(
+            168,
+            255,
+            90,
+            0.08
+        );
 
-    transform: translateY(-2px);
 }
+
 
 .upload-icon {
 
-    width: 65px;
-    height: 65px;
+    font-size: 48px;
 
-    border-radius: 20px;
+    margin-bottom: 15px;
 
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 28px;
-
-    background:
-        rgba(48, 218, 124, 0.12);
-
-    margin-bottom: 18px;
 }
+
 
 .upload-box h3 {
 
-    font-size: 18px;
+    font-size: 22px;
 
-    margin-bottom: 8px;
 }
+
 
 .upload-box p {
 
-    color: #8ca79a;
+    color: var(--muted);
 
-    font-size: 14px;
+    margin:
+        10px 0;
 
-    margin-bottom: 12px;
-}
-
-.upload-box small {
-
-    color: #4c7965;
-
-    font-size: 11px;
-
-    letter-spacing: 1px;
 }
 
 
-/* =====================================================
+.upload-box span {
+
+    font-size: 12px;
+
+    color:
+        var(--green);
+
+    font-weight: 700;
+
+}
+
+
+/* ========================================================
    PREVIEW
-===================================================== */
+   ======================================================== */
 
 .preview-container {
 
@@ -332,120 +407,128 @@ body {
 
     position: relative;
 
-    margin-top: 20px;
-
     justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+
+    border-radius: 22px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.04
+        );
+
 }
+
 
 .preview-container.show {
 
     display: flex;
+
 }
 
-#preview {
 
-    width: 100%;
+.preview-container img {
 
-    max-width: 430px;
+    max-width: 100%;
 
-    max-height: 350px;
+    max-height: 430px;
+
+    border-radius: 16px;
 
     object-fit: contain;
 
-    border-radius: 20px;
-
-    border:
-        1px solid
-        rgba(255,255,255,0.1);
-
-    box-shadow:
-        0 20px 50px
-        rgba(0,0,0,0.3);
 }
+
 
 .remove-btn {
 
     position: absolute;
 
-    top: -10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
 
-    width: 35px;
-    height: 35px;
+    width: 42px;
+    height: 42px;
 
     border: none;
 
     border-radius: 50%;
 
-    background: #17251f;
+    background:
+        #ef4444;
 
     color: white;
 
-    font-size: 22px;
+    font-size: 26px;
 
     cursor: pointer;
 
-    box-shadow:
-        0 5px 20px
-        rgba(0,0,0,0.4);
 }
 
 
-/* =====================================================
-   PREDICT BUTTON
-===================================================== */
+/* ========================================================
+   BUTTON
+   ======================================================== */
 
 .predict-btn {
 
     width: 100%;
 
-    margin-top: 25px;
+    margin-top: 18px;
 
-    padding: 17px 20px;
+    padding: 18px 25px;
 
     border: none;
 
     border-radius: 16px;
 
     background:
-        linear-gradient(
-            135deg,
-            #35df80,
-            #149b5c
-        );
+        var(--green);
 
-    color: #052414;
+    color: #071006;
 
-    font-size: 16px;
+    font-size: 17px;
 
-    font-weight: 800;
+    font-weight: 900;
 
     cursor: pointer;
 
     display: flex;
 
-    justify-content: center;
-
     align-items: center;
 
-    gap: 10px;
+    justify-content: center;
+
+    gap: 15px;
 
     transition:
-        0.25s ease;
+        0.2s ease;
 
-    box-shadow:
-        0 12px 35px
-        rgba(32, 210, 112, 0.2);
 }
+
 
 .predict-btn:hover {
 
-    transform: translateY(-2px);
+    transform:
+        translateY(-2px);
 
     box-shadow:
-        0 18px 45px
-        rgba(32, 210, 112, 0.3);
+        0 12px 30px
+        rgba(
+            168,
+            255,
+            90,
+            0.18
+        );
+
 }
+
 
 .predict-btn:disabled {
 
@@ -454,105 +537,686 @@ body {
     cursor: not-allowed;
 
     transform: none;
-}
 
-.arrow {
-
-    font-size: 20px;
 }
 
 
-/* =====================================================
+/* ========================================================
    RESULT
-===================================================== */
+   ======================================================== */
 
 .result-area {
 
-    margin-top: 25px;
+    margin-top: 30px;
+
 }
 
-.prediction-result {
+
+.result-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.result-label {
+
+    color:
+        var(--green);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+}
+
+
+.result-header h2 {
+
+    margin-top: 7px;
+
+    font-size: 27px;
+
+}
+
+
+.success-badge {
+
+    padding:
+        8px 14px;
+
+    border-radius: 30px;
+
+    color:
+        var(--green);
+
+    background:
+        rgba(
+            168,
+            255,
+            90,
+            0.1
+        );
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+}
+
+
+/* ========================================================
+   PREDICTION CARD
+   ======================================================== */
+
+.prediction-card {
 
     padding: 25px;
 
     border-radius: 20px;
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(42, 218, 119, 0.12),
-            rgba(20, 130, 78, 0.06)
+        var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+}
+
+
+.result-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding:
+        13px 0;
+
+}
+
+
+.result-row span {
+
+    color:
+        var(--muted);
+
+}
+
+
+.result-row strong {
+
+    text-align: right;
+
+    color:
+        var(--green);
+
+}
+
+
+.confidence-bar {
+
+    height: 8px;
+
+    margin-top: 12px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+
+    overflow: hidden;
+
+}
+
+
+.confidence-bar div {
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        var(--green);
+
+}
+
+
+/* ========================================================
+   TOP PREDICTIONS
+   ======================================================== */
+
+.top-predictions {
+
+    margin-top: 20px;
+
+    padding: 23px;
+
+    border-radius: 20px;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+}
+
+
+.top-predictions h3 {
+
+    margin-bottom: 15px;
+
+}
+
+
+.top-item {
+
+    display: grid;
+
+    grid-template-columns:
+        35px 1fr auto;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 13px 0;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+}
+
+
+.top-item:last-child {
+
+    border-bottom: none;
+
+}
+
+
+.rank {
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(
+            168,
+            255,
+            90,
+            0.1
+        );
+
+    color:
+        var(--green);
+
+    font-weight: 800;
+
+}
+
+
+.top-name {
+
+    color:
+        var(--text);
+
+}
+
+
+.top-item strong {
+
+    color:
+        var(--green);
+
+}
+
+
+/* ========================================================
+   GEMINI TITLE
+   ======================================================== */
+
+.gemini-title {
+
+    margin:
+        30px 0 18px;
+
+    font-size: 20px;
+
+    font-weight: 900;
+
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+
+}
+
+
+/* ========================================================
+   INFO GRID
+   ======================================================== */
+
+.info-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap: 18px;
+
+}
+
+
+.info-card {
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background:
+        var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+}
+
+
+.info-card.treatment {
+
+    border-left:
+        4px solid
+        #f4c542;
+
+}
+
+
+.info-card.prevention {
+
+    border-left:
+        4px solid
+        var(--green);
+
+}
+
+
+.info-icon {
+
+    font-size: 30px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.info-card h3 {
+
+    font-size: 21px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.advice-text {
+
+    color:
+        #c5ced9;
+
+    line-height: 1.7;
+
+}
+
+
+.advice-text p {
+
+    margin: 0;
+
+}
+
+
+.advice-text ul {
+
+    padding-left: 20px;
+
+}
+
+
+.advice-text li {
+
+    margin-bottom: 10px;
+
+}
+
+
+.no-data {
+
+    color:
+        var(--muted);
+
+}
+
+
+/* ========================================================
+   NOTICE
+   ======================================================== */
+
+.notice {
+
+    margin-top: 20px;
+
+    padding: 18px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(
+            255,
+            190,
+            50,
+            0.08
         );
 
     border:
         1px solid
-        rgba(57, 225, 132, 0.2);
+        rgba(
+            255,
+            190,
+            50,
+            0.15
+        );
 
-    animation:
-        resultIn 0.5s ease;
-}
+    color:
+        #d5dce5;
 
-.prediction-result h2 {
+    font-size: 13px;
 
-    font-size: 21px;
+    line-height: 1.6;
 
-    margin-bottom: 18px;
-}
-
-.prediction-result p {
-
-    color: #a5bdb1;
-
-    margin-top: 10px;
-}
-
-.prediction-result strong {
-
-    color: #eafff2;
 }
 
 
-/* =====================================================
+.gemini-warning {
+
+    margin-top: 20px;
+
+    padding: 18px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(
+            255,
+            100,
+            100,
+            0.08
+        );
+
+    color:
+        #ffb3b3;
+
+}
+
+
+/* ========================================================
    LOADING
-===================================================== */
+   ======================================================== */
 
-.loading {
+.loading-card {
+
+    padding: 45px;
 
     text-align: center;
 
-    padding: 25px;
-
-    color: #9fb8aa;
-
-    animation:
-        pulse 1.2s infinite;
-}
-
-
-/* =====================================================
-   ERROR
-===================================================== */
-
-.error {
-
-    padding: 20px;
-
-    border-radius: 16px;
+    border-radius: 22px;
 
     background:
-        rgba(255, 70, 70, 0.08);
+        var(--card);
 
     border:
         1px solid
-        rgba(255, 100, 100, 0.2);
+        var(--border);
 
-    color: #ffb5b5;
 }
 
 
-/* =====================================================
+.spinner {
+
+    width: 50px;
+    height: 50px;
+
+    margin:
+        0 auto 20px;
+
+    border:
+        4px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.1
+        );
+
+    border-top-color:
+        var(--green);
+
+    border-radius: 50%;
+
+    animation:
+        spin 1s linear infinite;
+
+}
+
+
+@keyframes spin {
+
+    to {
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
+.loading-card p {
+
+    color:
+        var(--muted);
+
+    margin-top: 10px;
+
+}
+
+
+.loading-card small {
+
+    display: block;
+
+    margin-top: 20px;
+
+    color:
+        var(--green);
+
+}
+
+
+/* ========================================================
+   ERROR
+   ======================================================== */
+
+.error {
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    background:
+        rgba(
+            239,
+            68,
+            68,
+            0.1
+        );
+
+    border:
+        1px solid
+        rgba(
+            239,
+            68,
+            68,
+            0.25
+        );
+
+    color:
+        #ffb4b4;
+
+}
+
+
+.error h3 {
+
+    margin-bottom: 10px;
+
+}
+
+
+.error small {
+
+    display: block;
+
+    margin-top: 15px;
+
+}
+
+
+/* ========================================================
+   HOW IT WORKS
+   ======================================================== */
+
+.how-section {
+
+    padding:
+        65px 0 35px;
+
+}
+
+
+.section-heading h2 {
+
+    font-size: 32px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.steps {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap: 18px;
+
+}
+
+
+.step {
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.035
+        );
+
+    border:
+        1px solid
+        var(--border);
+
+}
+
+
+.step-icon {
+
+    font-size: 32px;
+
+    margin-bottom: 15px;
+
+}
+
+
+.step h3 {
+
+    margin-bottom: 8px;
+
+}
+
+
+.step p {
+
+    color:
+        var(--muted);
+
+    line-height: 1.6;
+
+}
+
+
+/* ========================================================
    FOOTER
-===================================================== */
+   ======================================================== */
 
 footer {
 
@@ -560,91 +1224,97 @@ footer {
 
     justify-content: center;
 
-    gap: 10px;
+    flex-wrap: wrap;
 
-    margin-top: 20px;
+    gap: 12px;
 
-    color: #557464;
+    color:
+        var(--muted);
 
-    font-size: 11px;
+    padding-top: 30px;
+
+    font-size: 13px;
+
 }
 
 
-/* =====================================================
-   ANIMATIONS
-===================================================== */
+footer span:first-child {
 
-@keyframes resultIn {
+    color:
+        var(--green);
 
-    from {
-
-        opacity: 0;
-
-        transform:
-            translateY(15px);
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform:
-            translateY(0);
-    }
-}
-
-@keyframes pulse {
-
-    0%, 100% {
-
-        opacity: 0.5;
-    }
-
-    50% {
-
-        opacity: 1;
-    }
 }
 
 
-/* =====================================================
-   MOBILE
-===================================================== */
+/* ========================================================
+   RESPONSIVE
+   ======================================================== */
 
-@media (max-width: 600px) {
+@media (
+    max-width: 750px
+) {
 
-    body {
+    .container {
 
-        padding: 18px;
+        width: 94%;
+
+        padding-top: 30px;
+
     }
 
-    .hero h1 {
-
-        font-size: 27px;
-    }
-
-    .logo {
-
-        width: 55px;
-        height: 55px;
-
-        font-size: 28px;
-    }
 
     .card {
 
-        padding: 22px;
+        padding: 20px;
 
-        border-radius: 22px;
+        border-radius: 20px;
+
     }
+
+
+    .hero {
+
+        align-items: flex-start;
+
+    }
+
+
+    .hero h1 {
+
+        font-size: 38px;
+
+    }
+
+
+    .info-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .steps {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .result-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
 
     .upload-box {
 
-        min-height: 220px;
+        min-height: 240px;
+
     }
 
-    footer {
-
-        flex-wrap: wrap;
-    }
 }

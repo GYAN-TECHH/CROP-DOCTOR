@@ -8,6 +8,12 @@ import numpy as np
 import os
 import uuid
 
+# =========================================================
+# GEMINI
+# =========================================================
+
+from google import genai
+
 
 # =========================================================
 # 1. FLASK APP
@@ -44,7 +50,6 @@ UPLOAD_FOLDER = os.path.join(
     "uploads"
 )
 
-# Create uploads folder
 os.makedirs(
     UPLOAD_FOLDER,
     exist_ok=True
@@ -59,13 +64,13 @@ IMG_SIZE = 224
 
 
 # =========================================================
-# 4. LOAD MODEL
+# 4. LOAD CNN MODEL
 # =========================================================
 
 print()
 print("AI Crop Doctor")
 print("==============================")
-print("Loading model...")
+print("Loading CNN model...")
 
 model = None
 
@@ -75,7 +80,7 @@ try:
         MODEL_PATH
     )
 
-    print("Model loaded successfully!")
+    print("CNN model loaded successfully!")
 
 except Exception as e:
 
@@ -127,7 +132,51 @@ except Exception as e:
 
 
 # =========================================================
-# 6. CHECK MODEL + CLASSES
+# 6. GEMINI CONFIGURATION
+# =========================================================
+
+GEMINI_API_KEY = os.environ.get(
+    "GEMINI_API_KEY"
+)
+
+gemini_client = None
+
+if GEMINI_API_KEY:
+
+    try:
+
+        gemini_client = genai.Client(
+            api_key=GEMINI_API_KEY
+        )
+
+        print(
+            "Gemini configured successfully!"
+        )
+
+    except Exception as e:
+
+        print(
+            "Gemini configuration error:"
+        )
+
+        print(str(e))
+
+else:
+
+    print(
+        "WARNING: GEMINI_API_KEY not found."
+    )
+
+
+# =========================================================
+# 7. GEMINI MODEL
+# =========================================================
+
+GEMINI_MODEL = "gemini-2.5-flash"
+
+
+# =========================================================
+# 8. CHECK MODEL
 # =========================================================
 
 if model is not None:
@@ -137,7 +186,7 @@ if model is not None:
         output_shape = model.output_shape
 
         print(
-            "Model output shape:",
+            "CNN output shape:",
             output_shape
         )
 
@@ -147,7 +196,7 @@ if model is not None:
 
 
 # =========================================================
-# 7. PREDICTION FUNCTION
+# 9. CNN PREDICTION FUNCTION
 # =========================================================
 
 def predict_disease(image_path):
@@ -159,7 +208,7 @@ def predict_disease(image_path):
     if model is None:
 
         raise Exception(
-            "Model is not loaded."
+            "CNN model is not loaded."
         )
 
     # -----------------------------------------------------
@@ -181,7 +230,7 @@ def predict_disease(image_path):
     ).convert("RGB")
 
     # -----------------------------------------------------
-    # Resize image
+    # Resize
     # -----------------------------------------------------
 
     image = image.resize(
@@ -199,18 +248,14 @@ def predict_disease(image_path):
 
     # IMPORTANT:
     #
-    # DO NOT WRITE:
+    # Do NOT divide by 255 here.
     #
-    # image_array = image_array / 255.0
-    #
-    # Your training model already contains:
+    # Your CNN model already has:
     #
     # layers.Rescaling(1.0 / 255)
     #
-    # Therefore we send pixel values 0-255.
     # -----------------------------------------------------
 
-    # Add batch dimension
     image_array = np.expand_dims(
         image_array,
         axis=0
@@ -221,7 +266,7 @@ def predict_disease(image_path):
     print(image_array.shape)
 
     # -----------------------------------------------------
-    # Prediction
+    # CNN prediction
     # -----------------------------------------------------
 
     predictions = model.predict(
@@ -230,13 +275,13 @@ def predict_disease(image_path):
     )
 
     # -----------------------------------------------------
-    # Get prediction array
+    # Prediction values
     # -----------------------------------------------------
 
     prediction_values = predictions[0]
 
     # -----------------------------------------------------
-    # Get predicted class index
+    # Predicted index
     # -----------------------------------------------------
 
     predicted_index = int(
@@ -246,7 +291,7 @@ def predict_disease(image_path):
     )
 
     # -----------------------------------------------------
-    # Get confidence
+    # Confidence
     # -----------------------------------------------------
 
     confidence = float(
@@ -256,7 +301,7 @@ def predict_disease(image_path):
     ) * 100
 
     # -----------------------------------------------------
-    # Get class name
+    # Class name
     # -----------------------------------------------------
 
     if predicted_index < len(
@@ -278,7 +323,7 @@ def predict_disease(image_path):
     # -----------------------------------------------------
 
     print()
-    print("Prediction Result")
+    print("CNN Prediction Result")
     print("==============================")
 
     print(
@@ -306,7 +351,103 @@ def predict_disease(image_path):
 
 
 # =========================================================
-# 8. HOME ROUTE
+# 10. GEMINI ADVICE FUNCTION
+# =========================================================
+
+def get_gemini_advice(
+    disease,
+    confidence
+):
+
+    # -----------------------------------------------------
+    # Check Gemini
+    # -----------------------------------------------------
+
+    if gemini_client is None:
+
+        return {
+            "status": "error",
+            "message":
+                "Gemini API is not configured."
+        }
+
+    # -----------------------------------------------------
+    # Prompt
+    # -----------------------------------------------------
+
+    prompt = f"""
+
+You are an AI Crop Doctor assistant.
+
+A CNN image classification model detected:
+
+Disease: {disease}
+CNN Confidence: {confidence:.2f}%
+
+Provide useful information for a farmer.
+
+Give the answer in simple English.
+
+Include:
+
+1. Disease name
+2. What this disease means
+3. Main symptoms
+4. Possible cause
+5. Treatment
+6. Prevention
+7. Basic farming advice
+
+Important:
+- Do not say the diagnosis is 100% certain.
+- The CNN prediction is an AI prediction.
+- If the confidence is low, advise the farmer to consult an agricultural expert.
+- Do not recommend unsafe chemical use.
+- Keep the response practical and easy to understand.
+
+"""
+
+    # -----------------------------------------------------
+    # Call Gemini
+    # -----------------------------------------------------
+
+    try:
+
+        response = gemini_client.models.generate_content(
+
+            model=GEMINI_MODEL,
+
+            contents=prompt
+
+        )
+
+        return {
+
+            "status": "success",
+
+            "advice":
+                response.text
+
+        }
+
+    except Exception as e:
+
+        print()
+        print("Gemini Error:")
+        print(str(e))
+
+        return {
+
+            "status": "error",
+
+            "message":
+                str(e)
+
+        }
+
+
+# =========================================================
+# 11. HOME ROUTE
 # =========================================================
 
 @app.route(
@@ -323,13 +464,69 @@ def home():
             "AI Crop Doctor API is running",
 
         "classes":
-            len(class_names)
+            len(class_names),
+
+        "gemini":
+            gemini_client is not None
 
     })
 
 
 # =========================================================
-# 9. PREDICTION ROUTE
+# 12. GEMINI TEST ROUTE
+# =========================================================
+
+@app.route(
+    "/gemini-test",
+    methods=["GET"]
+)
+def gemini_test():
+
+    if gemini_client is None:
+
+        return jsonify({
+
+            "status": "error",
+
+            "error":
+                "GEMINI_API_KEY is not configured."
+
+        }), 500
+
+    try:
+
+        response = gemini_client.models.generate_content(
+
+            model=GEMINI_MODEL,
+
+            contents=
+                "Explain plant disease in one simple sentence."
+
+        )
+
+        return jsonify({
+
+            "status": "success",
+
+            "response":
+                response.text
+
+        })
+
+    except Exception as e:
+
+        return jsonify({
+
+            "status": "error",
+
+            "error":
+                str(e)
+
+        }), 500
+
+
+# =========================================================
+# 13. PREDICTION ROUTE
 # =========================================================
 
 @app.route(
@@ -343,7 +540,7 @@ def predict():
     try:
 
         # -------------------------------------------------
-        # Check image field
+        # Check image
         # -------------------------------------------------
 
         if "image" not in request.files:
@@ -385,10 +582,12 @@ def predict():
         # -------------------------------------------------
 
         allowed_extensions = {
+
             ".jpg",
             ".jpeg",
             ".png",
             ".webp"
+
         }
 
         extension = os.path.splitext(
@@ -408,17 +607,23 @@ def predict():
             }), 400
 
         # -------------------------------------------------
-        # Create unique filename
+        # Unique filename
         # -------------------------------------------------
 
         unique_filename = (
+
             str(uuid.uuid4())
+
             + extension
+
         )
 
         image_path = os.path.join(
+
             UPLOAD_FOLDER,
+
             unique_filename
+
         )
 
         # -------------------------------------------------
@@ -434,7 +639,7 @@ def predict():
         print(file.filename)
 
         # -------------------------------------------------
-        # Predict
+        # CNN PREDICTION
         # -------------------------------------------------
 
         disease, confidence = (
@@ -444,7 +649,19 @@ def predict():
         )
 
         # -------------------------------------------------
-        # Return result
+        # GEMINI ADVICE
+        # -------------------------------------------------
+
+        gemini_result = get_gemini_advice(
+
+            disease,
+
+            confidence
+
+        )
+
+        # -------------------------------------------------
+        # FINAL RESPONSE
         # -------------------------------------------------
 
         return jsonify({
@@ -458,7 +675,10 @@ def predict():
                 round(
                     confidence,
                     2
-                )
+                ),
+
+            "gemini":
+                gemini_result
 
         })
 
@@ -501,7 +721,7 @@ def predict():
 
 
 # =========================================================
-# 10. RUN SERVER
+# 14. RUN SERVER
 # =========================================================
 
 if __name__ == "__main__":
@@ -516,13 +736,28 @@ if __name__ == "__main__":
     )
 
     print(
-        "Server: http://127.0.0.1:5000"
+        "CNN Model:",
+        model is not None
+    )
+
+    print(
+        "Classes:",
+        len(class_names)
+    )
+
+    print(
+        "Gemini:",
+        gemini_client is not None
     )
 
     print()
 
-    app.run(
-        host="127.0.0.1",
-        port=5000,
-        debug=False
+    print(
+        "Server:"
     )
+
+    print(
+        "http://127.0.0.1:5000"
+    )
+
+    print()

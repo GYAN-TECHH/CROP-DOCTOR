@@ -2,170 +2,295 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>AI Crop Doctor</title>
 
-    <link rel="stylesheet"
-          href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
 
 <body>
 
-    <div class="background-glow glow-1"></div>
-    <div class="background-glow glow-2"></div>
+<div class="background-glow"></div>
 
-    <main class="container">
 
-        <!-- HEADER -->
-        <header class="hero">
+<main class="container">
 
-            <div class="logo">
-                🌱
+
+    <!-- HEADER -->
+
+    <header class="hero">
+
+        <div class="logo">
+            🌱
+        </div>
+
+        <div>
+
+            <p class="eyebrow">
+                AI AGRICULTURE SYSTEM
+            </p>
+
+            <h1>
+                AI-Driven Crop Disease Prediction
+            </h1>
+
+            <p class="subtitle">
+                AI-Powered Plant Disease Detection
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN CARD -->
+
+    <section class="card">
+
+
+        <!-- SECTION TITLE -->
+
+        <div class="section-title">
+
+            <div class="number">
+                01
             </div>
 
             <div>
-                <h1>AI-DRIVEN CROP DISEASE PREDICTION</h1>
+
+                <h2>
+                    Upload Leaf Image
+                </h2>
 
                 <p>
-                    Intelligent plant disease detection
-                    powered by AI
+                    Upload a clear image of an affected plant leaf.
                 </p>
-            </div>
-
-        </header>
-
-
-        <!-- MAIN CARD -->
-        <section class="card">
-
-            <div class="section-title">
-
-                <span>01</span>
-
-                <div>
-                    <h2>Upload Leaf</h2>
-                    <p>
-                        Upload a clear image of the leaf
-                    </p>
-                </div>
 
             </div>
 
-
-            <!-- FORM -->
-            <form id="predictionForm">
-
-                <!-- DROP AREA -->
-                <label
-                    for="imageInput"
-                    class="upload-box"
-                    id="uploadBox"
-                >
-
-                    <div class="upload-icon">
-                        📷
-                    </div>
-
-                    <h3>
-                        Drop your leaf image here
-                    </h3>
-
-                    <p>
-                        or click to browse
-                    </p>
-
-                    <small>
-                        JPG • JPEG • PNG • WEBP
-                    </small>
-
-                    <input
-                        type="file"
-                        id="imageInput"
-                        name="image"
-                        accept="image/*"
-                        required
-                        hidden
-                    >
-
-                </label>
+        </div>
 
 
-                <!-- IMAGE PREVIEW -->
-                <div
-                    class="preview-container"
-                    id="previewContainer"
-                >
+        <!-- FORM -->
 
-                    <img
-                        id="preview"
-                        alt="Leaf preview"
-                    >
+        <form id="predictionForm">
 
-                    <button
-                        type="button"
-                        id="removeImage"
-                        class="remove-btn"
-                    >
-                        ×
-                    </button>
 
+            <!-- UPLOAD BOX -->
+
+            <label
+                for="imageInput"
+                class="upload-box"
+                id="uploadBox"
+            >
+
+                <div class="upload-icon">
+                    📷
                 </div>
 
+                <h3>
+                    Upload your leaf image
+                </h3>
 
-                <!-- PREDICT BUTTON -->
+                <p>
+                    Click here to select an image
+                </p>
+
+                <span>
+                    JPG • JPEG • PNG • WEBP
+                </span>
+
+
+                <input
+                    type="file"
+                    id="imageInput"
+                    name="image"
+                    accept="image/jpeg,image/png,image/webp,image/jpg"
+                    hidden
+                    required
+                >
+
+            </label>
+
+
+            <!-- PREVIEW -->
+
+            <div
+                class="preview-container"
+                id="previewContainer"
+            >
+
+                <img
+                    id="preview"
+                    src=""
+                    alt="Leaf preview"
+                >
+
                 <button
-                    type="submit"
-                    id="predictButton"
-                    class="predict-btn"
+                    type="button"
+                    id="removeImage"
+                    class="remove-btn"
                 >
-
-                    <span>
-                        🔍
-                    </span>
-
-                    Analyze Leaf
-
-                    <span class="arrow">
-                        →
-                    </span>
-
+                    ×
                 </button>
 
-            </form>
+            </div>
 
 
-            <!-- RESULT -->
-            <div
-                id="result"
-                class="result-area"
-            ></div>
+            <!-- ANALYZE BUTTON -->
 
-        </section>
+            <button
+                type="submit"
+                id="predictButton"
+                class="predict-btn"
+            >
 
+                <span>
+                    🔍
+                </span>
 
-        <!-- FOOTER -->
-        <footer>
+                Analyze Leaf
 
-            <span>AI Powered</span>
+                <span>
+                    →
+                </span>
 
-            <span>•</span>
-
-            <span>Plant Disease Detection</span>
-
-            <span>•</span>
-
-            <span>15 Classes</span>
-
-        </footer>
-
-    </main>
+            </button>
 
 
-    <script src="script.js"></script>
+        </form>
+
+
+        <!-- RESULT -->
+
+        <div
+            id="result"
+            class="result-area"
+        ></div>
+
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+
+    <section class="how-section">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">
+                PROCESS
+            </p>
+
+            <h2>
+                How AI Crop Doctor Works
+            </h2>
+
+        </div>
+
+
+        <div class="steps">
+
+
+            <div class="step">
+
+                <div class="step-icon">
+                    📷
+                </div>
+
+                <h3>
+                    1. Upload
+                </h3>
+
+                <p>
+                    Upload a clear image of the plant leaf.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-icon">
+                    🧠
+                </div>
+
+                <h3>
+                    2. CNN Detection
+                </h3>
+
+                <p>
+                    CNN analyzes the image and predicts the disease.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-icon">
+                    🤖
+                </div>
+
+                <h3>
+                    3. Gemini AI
+                </h3>
+
+                <p>
+                    Gemini provides treatment and prevention guidance.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <span>
+            🌱 AI Powered
+        </span>
+
+        <span>
+            •
+        </span>
+
+        <span>
+            CNN Detection
+        </span>
+
+        <span>
+            •
+        </span>
+
+        <span>
+            Gemini AI
+        </span>
+
+    </footer>
+
+
+</main>
+
+
+<script src="script.js"></script>
 
 </body>
 
