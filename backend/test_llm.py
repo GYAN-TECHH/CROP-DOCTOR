@@ -1,28 +1,77 @@
 import os
+from pathlib import Path
+
 from dotenv import load_dotenv
 from google import genai
 
-load_dotenv()
 
+# --------------------------------
+# Load backend/.env
+# --------------------------------
+BASE_DIR = Path(__file__).resolve().parent
+ENV_PATH = BASE_DIR / ".env"
+
+load_dotenv(ENV_PATH)
+
+
+# --------------------------------
+# Get Gemini API key
+# --------------------------------
 api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
-    print("ERROR: GEMINI_API_KEY not found")
+    print("❌ GEMINI_API_KEY not found")
+    print(f"Expected .env file: {ENV_PATH}")
     exit()
 
-client = genai.Client(api_key=api_key)
 
+print("✅ GEMINI_API_KEY loaded")
+
+
+# --------------------------------
+# Gemini Client
+# --------------------------------
 try:
-    response = client.models.generate_content(
-        model="gemini-3.5-flash",
-        model_type="gemini-3.6-flash",
-                model_version="gemini-3.5-flash",
-        contents="Give 3 simple prevention tips for tomato late blight."
-    )
-
-    print("\nGemini Response:")
-    print(response.text)
+    client = genai.Client(api_key=api_key)
+    print("✅ Gemini client connected")
 
 except Exception as e:
-    print("\nGemini Error:")
+    print("❌ Gemini client error:")
     print(e)
+    exit()
+
+
+# --------------------------------
+# Test Gemini
+# --------------------------------
+try:
+
+    print("\n🤖 Testing Gemini...")
+
+    response = client.models.generate_content(
+        model="gemini-3.8-flash",
+        contents=(
+            "You are an agricultural assistant. "
+            "Give 3 simple prevention tips for tomato late blight."
+        )
+    )
+
+    print("\n" + "=" * 60)
+    print("GEMINI RESPONSE")
+    print("=" * 60)
+
+    print(response.text)
+
+    print("=" * 60)
+    print("✅ GEMINI TEST SUCCESSFUL")
+    print("=" * 60)
+
+except Exception as e:
+
+    print("\n" + "=" * 60)
+    print("❌ GEMINI ERROR")
+    print("=" * 60)
+
+    print(e)
+
+    print("=" * 60)

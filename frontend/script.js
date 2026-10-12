@@ -6,14 +6,14 @@
 
 
 // =========================================================
-// API
+// 1. API
 // =========================================================
 
 const API_URL = "http://127.0.0.1:5000/predict";
 
 
 // =========================================================
-// ELEMENTS
+// 2. ELEMENTS
 // =========================================================
 
 const form =
@@ -41,15 +41,13 @@ const predictButton =
     document.getElementById("predictButton");
 
 
-// =========================================================
-// CHECK ELEMENTS
-// =========================================================
-
-console.log("AI Crop Doctor JavaScript loaded.");
+console.log(
+    "🌱 AI Crop Doctor JavaScript loaded."
+);
 
 
 // =========================================================
-// IMAGE SELECTION
+// 3. IMAGE SELECTION
 // =========================================================
 
 imageInput.addEventListener(
@@ -58,7 +56,6 @@ imageInput.addEventListener(
 
         const file =
             imageInput.files[0];
-
 
         if (!file) {
             return;
@@ -89,7 +86,9 @@ imageInput.addEventListener(
             10 * 1024 * 1024;
 
 
-        if (file.size > maxSize) {
+        if (
+            file.size > maxSize
+        ) {
 
             alert(
                 "Image size must be less than 10 MB."
@@ -129,7 +128,7 @@ imageInput.addEventListener(
 
 
 // =========================================================
-// REMOVE IMAGE
+// 4. REMOVE IMAGE
 // =========================================================
 
 removeImage.addEventListener(
@@ -154,7 +153,7 @@ removeImage.addEventListener(
 
 
 // =========================================================
-// FORM SUBMIT
+// 5. FORM SUBMIT
 // =========================================================
 
 form.addEventListener(
@@ -165,7 +164,7 @@ form.addEventListener(
 
 
         // -------------------------------------------------
-        // GET FILE
+        // Get file
         // -------------------------------------------------
 
         const file =
@@ -183,7 +182,7 @@ form.addEventListener(
 
 
         // -------------------------------------------------
-        // LOADING
+        // Loading
         // -------------------------------------------------
 
         result.innerHTML = `
@@ -223,7 +222,7 @@ form.addEventListener(
 
 
         // -------------------------------------------------
-        // FORM DATA
+        // Form Data
         // -------------------------------------------------
 
         const formData =
@@ -237,13 +236,13 @@ form.addEventListener(
 
 
         // -------------------------------------------------
-        // SEND TO FLASK
+        // Send to Flask
         // -------------------------------------------------
 
         try {
 
             console.log(
-                "Sending image to:",
+                "📤 Sending image to:",
                 API_URL
             );
 
@@ -259,7 +258,7 @@ form.addEventListener(
 
 
             // -------------------------------------------------
-            // READ RESPONSE
+            // Read JSON response
             // -------------------------------------------------
 
             const data =
@@ -267,13 +266,13 @@ form.addEventListener(
 
 
             console.log(
-                "Flask response:",
+                "📥 Flask response:",
                 data
             );
 
 
             // -------------------------------------------------
-            // ERROR
+            // Error
             // -------------------------------------------------
 
             if (
@@ -282,16 +281,16 @@ form.addEventListener(
             ) {
 
                 throw new Error(
+                    data.error ||
                     data.message ||
                     "Prediction failed."
                 );
-
             }
 
 
-            // -------------------------------------------------
+            // =================================================
             // DISEASE
-            // -------------------------------------------------
+            // =================================================
 
             const disease =
                 data.disease ||
@@ -299,9 +298,9 @@ form.addEventListener(
                 "Unknown Disease";
 
 
-            // -------------------------------------------------
+            // =================================================
             // CONFIDENCE
-            // -------------------------------------------------
+            // =================================================
 
             let confidence =
                 Number(
@@ -324,9 +323,9 @@ form.addEventListener(
                 confidence.toFixed(2);
 
 
-            // -------------------------------------------------
+            // =================================================
             // TOP PREDICTIONS
-            // -------------------------------------------------
+            // =================================================
 
             const topPredictionsHTML =
                 createTopPredictions(
@@ -334,21 +333,9 @@ form.addEventListener(
                 );
 
 
-            // -------------------------------------------------
-            // GEMINI
-            // -------------------------------------------------
-
-            const treatment =
-                formatAdvice(
-                    data.treatment
-                );
-
-
-            const prevention =
-                formatAdvice(
-                    data.prevention
-                );
-
+            // =================================================
+            // GEMINI DATA
+            // =================================================
 
             const cause =
                 formatText(
@@ -362,9 +349,21 @@ form.addEventListener(
                 );
 
 
-            // -------------------------------------------------
+            const treatment =
+                formatAdvice(
+                    data.treatment
+                );
+
+
+            const prevention =
+                formatAdvice(
+                    data.prevention
+                );
+
+
+            // =================================================
             // GEMINI ERROR
-            // -------------------------------------------------
+            // =================================================
 
             let geminiWarning = "";
 
@@ -392,9 +391,9 @@ form.addEventListener(
             }
 
 
-            // -------------------------------------------------
+            // =================================================
             // RESULT HTML
-            // -------------------------------------------------
+            // =================================================
 
             result.innerHTML = `
 
@@ -454,10 +453,12 @@ form.addEventListener(
                     <div class="confidence-bar">
 
                         <div
-                            style="width:${Math.min(
-                                Number(confidence),
-                                100
-                            )}%"
+                            style="
+                                width:${Math.min(
+                                    Number(confidence),
+                                    100
+                                )}%
+                            "
                         ></div>
 
                     </div>
@@ -470,7 +471,7 @@ form.addEventListener(
                 ${topPredictionsHTML}
 
 
-                <!-- GEMINI INFORMATION -->
+                <!-- GEMINI -->
 
                 <div class="gemini-title">
 
@@ -499,7 +500,9 @@ form.addEventListener(
                         </h3>
 
                         <div class="advice-text">
+
                             ${cause}
+
                         </div>
 
                     </div>
@@ -518,7 +521,9 @@ form.addEventListener(
                         </h3>
 
                         <div class="advice-text">
+
                             ${symptoms}
+
                         </div>
 
                     </div>
@@ -537,7 +542,9 @@ form.addEventListener(
                         </h3>
 
                         <div class="advice-text">
+
                             ${treatment}
+
                         </div>
 
                     </div>
@@ -556,7 +563,9 @@ form.addEventListener(
                         </h3>
 
                         <div class="advice-text">
+
                             ${prevention}
+
                         </div>
 
                     </div>
@@ -572,7 +581,11 @@ form.addEventListener(
 
                 <div class="notice">
 
-                    ⚠️ <strong>Important:</strong>
+                    ⚠️
+
+                    <strong>
+                        Important:
+                    </strong>
 
                     AI-generated agricultural guidance.
 
@@ -587,10 +600,11 @@ form.addEventListener(
 
         }
 
+
         catch (error) {
 
             console.error(
-                "Prediction error:",
+                "❌ Prediction error:",
                 error
             );
 
@@ -629,7 +643,7 @@ form.addEventListener(
 
 
 // =========================================================
-// FORMAT ADVICE
+// 6. FORMAT ADVICE
 // =========================================================
 
 function formatAdvice(text) {
@@ -640,9 +654,11 @@ function formatAdvice(text) {
     ) {
 
         return `
+
             <p class="no-data">
                 No advice available.
             </p>
+
         `;
 
     }
@@ -652,10 +668,12 @@ function formatAdvice(text) {
         String(text)
             .split("\n")
             .map(
-                line => line.trim()
+                line =>
+                    line.trim()
             )
             .filter(
-                line => line.length > 0
+                line =>
+                    line.length > 0
             );
 
 
@@ -665,6 +683,8 @@ function formatAdvice(text) {
     lines.forEach(
         function (line) {
 
+            // Remove bullet symbols
+
             line =
                 line.replace(
                     /^[-•*]\s*/,
@@ -672,8 +692,17 @@ function formatAdvice(text) {
                 );
 
 
+            // Remove markdown numbering
+
+            line =
+                line.replace(
+                    /^\d+\.\s*/,
+                    ""
+                );
+
+
             if (
-                line.endsWith(":")
+                line.trim().length === 0
             ) {
 
                 return;
@@ -694,9 +723,11 @@ function formatAdvice(text) {
     ) {
 
         return `
+
             <p>
                 ${escapeHTML(text)}
             </p>
+
         `;
 
     }
@@ -708,9 +739,11 @@ function formatAdvice(text) {
 
             ${items.map(
                 item => `
+
                     <li>
                         ${escapeHTML(item)}
                     </li>
+
                 `
             ).join("")}
 
@@ -722,7 +755,7 @@ function formatAdvice(text) {
 
 
 // =========================================================
-// FORMAT NORMAL TEXT
+// 7. FORMAT NORMAL TEXT
 // =========================================================
 
 function formatText(text) {
@@ -733,9 +766,11 @@ function formatText(text) {
     ) {
 
         return `
+
             <p class="no-data">
                 No information available.
             </p>
+
         `;
 
     }
@@ -753,7 +788,7 @@ function formatText(text) {
 
 
 // =========================================================
-// TOP 3 PREDICTIONS
+// 8. TOP 3 PREDICTIONS
 // =========================================================
 
 function createTopPredictions(
@@ -795,7 +830,8 @@ function createTopPredictions(
 
                         const confidence =
                             Number(
-                                item.confidence || 0
+                                item.confidence ||
+                                0
                             );
 
 
@@ -834,7 +870,7 @@ function createTopPredictions(
 
 
 // =========================================================
-// ERROR DISPLAY
+// 9. ERROR DISPLAY
 // =========================================================
 
 function showError(
@@ -869,7 +905,7 @@ function showError(
 
 
 // =========================================================
-// ESCAPE HTML
+// 10. ESCAPE HTML
 // =========================================================
 
 function escapeHTML(
@@ -877,22 +913,27 @@ function escapeHTML(
 ) {
 
     return String(value)
+
         .replace(
             /&/g,
             "&amp;"
         )
+
         .replace(
             /</g,
             "&lt;"
         )
+
         .replace(
             />/g,
             "&gt;"
         )
+
         .replace(
             /"/g,
             "&quot;"
         )
+
         .replace(
             /'/g,
             "&#039;"
